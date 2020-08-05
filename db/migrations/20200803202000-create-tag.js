@@ -1,43 +1,29 @@
 'use strict';
 module.exports = {
   up:  (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Galleries', {
+    return queryInterface.createTable('Tags', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      albumId:{ 
         type: Sequelize.INTEGER,
-        references: { model: 'Users'}
+        references: {model: 'Albums'}
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: true,
+      galleryId: {
+        type: Sequelize.INTEGER,
+        eferences: {model: 'Galleries'}
       },
       photoId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Photos'}
+        eferences: {model: 'Photos'}
       },
-      views: {
-        type: Sequelize.INTEGER
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      tagWord: {type: Sequelize.STRING(100)}
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Galleries');
+    return queryInterface.dropTable('Tags');
   }
 };
