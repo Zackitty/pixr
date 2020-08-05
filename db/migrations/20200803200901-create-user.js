@@ -23,6 +23,9 @@ module.exports = {
         type: Sequelize.STRING(255),
         unique: true,
       },
+      tokenId: {
+        type: Sequelize.STRING(36),
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
