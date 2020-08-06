@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../actions/authentication';
 import LogoutButton from './LogoutButton';
+import Upload from "./Upload"
 
 const NavBar = ({ token }) => {
   return (
     <main>
       <LogoutButton token={token} />
+      <Upload />
       <nav>
         <div>Hello World!</div>
       </nav>
