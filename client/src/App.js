@@ -5,7 +5,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import LoginPanel from './components/LoginPanel';
 import NavBar from './components/NavBar';
 import { loadToken } from './actions/authentication';
-
+import Upload from "./components/Upload"
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
     rest.needLogin === true
@@ -40,6 +40,10 @@ const App = () => {
           exact={true}
           needLogin={needLogin}
           component={NavBar} />
+          <PrivateRoute path="/upload"
+          exact={true}
+          needLogin={needLogin}
+          component={Upload} />
       </Switch>
     </BrowserRouter>
   );

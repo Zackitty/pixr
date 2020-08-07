@@ -23,6 +23,18 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      photo: {
+        type: Sequelize.BLOB,
+      },
+      imageUrl:{
+        type: Sequelize.STRING(255),
+        allowNull: false,
+        unique: true,
+      },
+      imageLocalPath:{
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

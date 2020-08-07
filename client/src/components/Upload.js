@@ -12,27 +12,26 @@ const [uploadedFile, setUploadedFile] = useState({ })
   }
 
   const onSubmit = async e => {
-    e.preventDefault()
+    e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      const res = await axios.post('/upload', formData, {
+      const res = await axios.post('http://localhost:8000/api/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
-      })
+        },
+      });
 
-      const {fileName, filePath} = res.data;
-      setUploadedFile({ fileName, filePath})
-    } catch(err) {
-      if(err.response.status === 500){
-        console.log('There was a problem with the server')
-      }else {
-        console.log(err.response.data.msg)
+      const { fileName, filePath } = res.data;
+
+      setUploadedFile({ fileName, filePath });
+    } catch (err) {
+      if (err.response.status === 500) {
+        console.log('There was a problem with the server');
       }
     }
-  }
+  };
 
   return (
     <Fragment>

@@ -9,7 +9,7 @@ const NavBar = ({ token }) => {
   return (
     <main>
       <LogoutButton token={token} />
-      <Upload />
+      <Upload token={token} />
       <nav>
         <div>Hello World!</div>
       </nav>

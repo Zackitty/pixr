@@ -1,6 +1,24 @@
-const { commerce } = require('faker');
 const { Photo } = require('./models');
 
-function random100() {
-  return Math.floor(Math.random() * 100) + 1;
+
+
+
+async function create(file) {
+  const photo = await Photo.build(file);
+   
+  return await photo.save();
 }
+
+async function findByEmail(email) {
+  const user = await User.findOne({ where: { email } });
+  return user || new NullUser();
+}
+
+async function findByTokenId(tokenId) {
+  const user = await User.findOne({ where: { tokenId } });
+  return user || new NullUser();
+}
+
+module.exports = {
+  create,
+};
