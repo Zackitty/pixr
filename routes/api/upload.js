@@ -1,31 +1,61 @@
-const express = require('express');
+const express = require("express");
+const db = require('../../db/models');
+const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const { check, validationResult } = require('express-validator');
-
 const UserRepository = require('../../db/user-repository');
 const { authenticated, generateToken } = require('./security-utils');
+const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const cors = require('cors');
+const multerS3 = require('multer-s3');
+router.use(cookieParser());
+require("dotenv").config();
+const aws = require("aws-sdk");
+const s3 = new aws.S3();
 
-const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+aws.config.update({
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  region: process.env.AWS_REGION,
 });
 
-router.post('/', (req, res) => {
-  if (req.files === null) {
-    return res.status(400).json({ msg: 'No file uploaded' });
-  }
+const upload = multer({
+  storage: multerS3({
+    acl: "public-read",
+    s3,
+    bucket: 'zackitty',
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: "TESTING_METADATA" });
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString());
+    },
+  }),
+});
 
-  const file = req.files.file;
+const singleUpload = upload.single("image");
 
-  file.mv(`/Users/zackitty/Desktop/App Academy/pixr-fsp/client/public/uploads/${file.name}`, err => {
+router.post('/', function(req, res){
+  const uid = req.params.id;
+  singleUpload(req, res, function (err) {
     if (err) {
-      console.error(err);
-      return res.status(500).send(err);
+      return res.json({
+        success: false,
+        errors: {
+          title: "Image Upload Error",
+          detail: err.message,
+          error: err,
+        },
+      });
     }
+    console.log(req.file)
+  })
+   
 
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-  });
-});
+
+})
+
+
+
 module.exports = router;

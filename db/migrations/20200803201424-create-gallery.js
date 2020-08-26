@@ -24,9 +24,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Photos'}
       },
-      views: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -23,10 +23,6 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      views: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -1,58 +1,79 @@
-import React, { Fragment, useState } from 'react';
-import { selectFields } from 'express-validator/src/select-fields';
-import axios from 'axios'
-
-const Upload = ({ token }) => {
-const [file, setFile] = useState('');
-const [filename, setFilename] = useState('Choose File')
-const [uploadedFile, setUploadedFile] = useState({ })
-  const onChange = e => {
-    setFile(e.target.files[0])
-    setFilename(e.target.files[0].name)
-  }
-
-  const onSubmit = async e => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await axios.post('http://localhost:8000/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-      });
-
-      const { fileName, filePath } = res.data;
-
-      setUploadedFile({ fileName, filePath });
-    } catch (err) {
-      if (err.response.status === 500) {
-        console.log('There was a problem with the server');
-      }
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { baseUrl } from '../config';
+import React, { Component } from "react";
+import axios from "axios";
+import { Card, CardHeader, CardText, CardBody, Row, Col } from "reactstrap";
+  
+  const endpoint = `${baseUrl}/upload`
+  
+  class Upload extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        description: "",
+        selectedFile: null
+      };
     }
-  };
-
-  return (
-    <Fragment>
-      <form onSubmit={onSubmit}> 
-        <div className='custom-file'>
-          <input type='file' className='custom-file-input' id='customFile' onChange={onChange} />
-          <label className='custom-file-label' htmlFor='customFile'>
-            {filename}
-            </label>
+  
+    handleSelectedFile = e => {
+      e.preventDefault();
+      this.setState({
+        description: e.target.value,
+        selectedFile: e.target.files[0]
+      });
+    };
+  
+    onChange = e => {
+      this.setState({ [e.target.name]: e.target.value });
+    };
+  
+    handleUpload = event => {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      data.append("file", this.state.selectedFile, this.state.description);
+  
+      axios
+        .post(endpoint, data)
+        .then(() => {
+          this.props.history.push("/");
+        })
+        .catch(error => {
+          alert("Oops some error happened, please try again");
+        });
+    };
+  
+    render() {
+      const { description, selectedFile } = this.state;
+  
+      return (
+        <div>
+                    <form onSubmit={this.handleUpload}>
+                      <div className="form-group">
+                        <label htmlFor="description">Description:</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="description"
+                          onChange={this.onChange}
+                          placeholder="Description"
+                        />
+                      </div>
+  
+                      <div className="form-group">
+                        <input
+                          type="file"
+                          name=""
+                          id=""
+                          onChange={this.handleSelectedFile}
+                        />
+                      </div>
+                      <button type="submit" className="btn btn-primary">
+                        Upload
+                      </button>
+                    </form>
         </div>
-
-        <input type="submit" value="Upload" className="btn" />
-      </form>
-      { uploadedFile ? <div className="row">
-        <h3>{uploadedFile.fileName}</h3>
-        <img src={uploadedFile.filePath} alt=""/>
-      </div> : null}
-    </Fragment>
-  );
-};
-
-
-
-export default Upload
+      );
+    }
+  }
+  
+  export default Upload;

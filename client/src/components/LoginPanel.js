@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { login } from '../actions/authentication';
 
 const LoginPanel = () => {
@@ -13,7 +13,9 @@ const LoginPanel = () => {
     e.preventDefault();
     dispatch(login(email, password));
   };
-
+  const handleClick = () =>  <Link to="/register"/>;
+  
+    
   const updateEmail = e => setEmail(e.target.value);
   const updatePassword = e => setPassword(e.target.value);
 
@@ -22,7 +24,7 @@ const LoginPanel = () => {
   }
 
   return (
-    <main className="centered middled">
+    <main className="login-panel">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -36,8 +38,9 @@ const LoginPanel = () => {
           onChange={updatePassword} />
         <button type="submit">Login</button>
       </form>
+      <input type="button" onClick={handleClick} value="Register" />
     </main>
   );
-};
+  }
 
 export default LoginPanel;
