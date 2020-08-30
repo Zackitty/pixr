@@ -1,61 +1,56 @@
 const express = require("express");
-const db = require('../../db/models');
+const { Photo, User} = require('../../db/models');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const UserRepository = require('../../db/user-repository');
-const { authenticated, generateToken } = require('./security-utils');
-const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const cors = require('cors');
-const multerS3 = require('multer-s3');
-router.use(cookieParser());
+
+const multers3 = require('multer-s3');
+// router.use(cookieParser());
 require("dotenv").config();
-const aws = require("aws-sdk");
-const s3 = new aws.S3();
+const AWS = require("aws-sdk");
 
-
-aws.config.update({
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const s3= new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  region: process.env.AWS_REGION,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-const upload = multer({
-  storage: multerS3({
-    acl: "public-read",
-    s3,
+
+const uploadS3 = multer({
+  storage: multers3({
+    s3: s3,
+    acl: 'public-read',
     bucket: 'zackitty',
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: "TESTING_METADATA" });
+    metadata: (req, file, cb) => {
+      cb(null, {fieldName: file.fieldname})
     },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString());
-    },
-  }),
+    key: (req, file, cb) => {
+      cb(null, Date.now().toString() + '-' + file.originalname)
+    }
+  })
 });
 
-const singleUpload = upload.single("image");
+const UserRepository = require('../../db/user-repository');
 
-router.post('/', function(req, res){
-  const uid = req.params.id;
-  singleUpload(req, res, function (err) {
-    if (err) {
-      return res.json({
-        success: false,
-        errors: {
-          title: "Image Upload Error",
-          detail: err.message,
-          error: err,
-        },
-      });
-    }
-    console.log(req.file)
+router.post('/', uploadS3.single('thisFile'), asyncHandler(async (req, res) => {
+  console.log(req.body)
+  console.log(req.user)
+  axios.get()
+ const user = await User.findOne({
+  where: {
+    tokenId: req.body.token
+  }
+});
+
+
+  const photo = await Photo.build({
+    name: `${req.file.originalname} ${Date.now().toString()}`,
+    photoPath: req.file.location,
   })
-   
+  return await photo.save()
 
 
-})
 
-
+}));
 
 module.exports = router;

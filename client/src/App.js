@@ -5,9 +5,8 @@ import Register from './components/Register'
 import LoginPanel from './components/LoginPanel';
 import NavBar from './components/NavBar';
 import { loadToken } from './actions/authentication';
-import Photo from "./components/Photo"
 import Upload from "./components/Upload"
-
+import Feed from "./components/Feed"
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -19,7 +18,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )} />
 )
 
-const App = () => {
+const App = (props) => {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   const needLogin = useSelector(state => !state.authentication.token);
@@ -42,14 +41,10 @@ const App = () => {
           exact={true}
           needLogin={needLogin}
           component={NavBar} />
-        <PrivateRoute path="NavBar"
+        <PrivateRoute path="/NavBar"
           exact={true}
           needLogin={needLogin}
           component={NavBar} />
-          <PrivateRoute path="/photo"
-          exact={true}
-          needLogin={needLogin}
-          component={Photo} />
           <PrivateRoute path='/upload'
           exact={true}
           needLogin={needLogin}
@@ -57,9 +52,8 @@ const App = () => {
           /> <PrivateRoute path='/feed'
           exact={true}
           needLogin={needLogin}
-          component={Upload}
+          component={Feed}
           />
-          <Upload />
       </Switch>
     </BrowserRouter>
   );

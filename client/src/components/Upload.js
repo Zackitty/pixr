@@ -1,79 +1,38 @@
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import axios from 'axios';
 import { baseUrl } from '../config';
-import React, { Component } from "react";
-import axios from "axios";
-import { Card, CardHeader, CardText, CardBody, Row, Col } from "reactstrap";
+import { Redirect } from 'react-router-dom';
+import Feed  from './Feed'
+import { useSelector, useDispatch } from 'react-redux'
+const Upload = () => {
+
+
+  const token = useSelector(state => state.authentication.token);
+
+
+  const uploadFile = async e => {
+    var formData = new FormData();
+    var imagefile = document.querySelector('#file');
   
-  const endpoint = `${baseUrl}/upload`
-  
-  class Upload extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        description: "",
-        selectedFile: null
-      };
-    }
-  
-    handleSelectedFile = e => {
-      e.preventDefault();
-      this.setState({
-        description: e.target.value,
-        selectedFile: e.target.files[0]
-      });
-    };
-  
-    onChange = e => {
-      this.setState({ [e.target.name]: e.target.value });
-    };
-  
-    handleUpload = event => {
-      event.preventDefault();
-      const data = new FormData(event.target);
-      data.append("file", this.state.selectedFile, this.state.description);
-  
-      axios
-        .post(endpoint, data)
-        .then(() => {
-          this.props.history.push("/");
-        })
-        .catch(error => {
-          alert("Oops some error happened, please try again");
-        });
-    };
-  
-    render() {
-      const { description, selectedFile } = this.state;
-  
-      return (
-        <div>
-                    <form onSubmit={this.handleUpload}>
-                      <div className="form-group">
-                        <label htmlFor="description">Description:</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="description"
-                          onChange={this.onChange}
-                          placeholder="Description"
-                        />
-                      </div>
-  
-                      <div className="form-group">
-                        <input
-                          type="file"
-                          name=""
-                          id=""
-                          onChange={this.handleSelectedFile}
-                        />
-                      </div>
-                      <button type="submit" className="btn btn-primary">
-                        Upload
-                      </button>
-                    </form>
-        </div>
-      );
-    }
-  }
-  
-  export default Upload;
+    formData.append("thisFile", imagefile.files[0]);
+    formData.append("token", token)
+    axios.post(`${baseUrl}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    })
+    return <Redirect to="/" />
+ 
+  };
+
+  return (
+    <Fragment>
+     <form id="uploadForm" encType="multipart/form-data" onSubmit={uploadFile}>
+<input type="file" id="file" name="thisFile"/>
+<button>Submit</button>
+</form>
+    </Fragment>
+  );
+};
+
+export default Upload;

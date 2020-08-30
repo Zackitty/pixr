@@ -4,14 +4,11 @@ const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
 const logger = require('morgan');
-const fileUpload = require('express-fileupload');
+
 const routes = require('./routes');
 const app = express();
-const multer = require('multer')
-const AWS = require('aws-sdk')
-const fs=require('fs')
-app.use(fileUpload());
-app.use(cors());
+
+app.use(cors({ origin: true }));
 app.use(helmet({ hsts: false }));
 app.use(logger('dev'));
 app.use(express.json());

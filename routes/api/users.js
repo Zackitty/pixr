@@ -23,6 +23,7 @@ const password =
     .not().isEmpty()
     .withMessage('Please provide a password');
 
+
 router.post('/', email, password, name, asyncHandler(async function (req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -30,7 +31,7 @@ router.post('/', email, password, name, asyncHandler(async function (req, res, n
   }
 
   const user = await UserRepository.create(req.body);
-
+  
   const { jti, token } = generateToken(user);
   user.tokenId = jti;
   await user.save();
