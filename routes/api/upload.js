@@ -33,14 +33,9 @@ const uploadS3 = multer({
 const UserRepository = require('../../db/user-repository');
 
 router.post('/', uploadS3.single('thisFile'), asyncHandler(async (req, res) => {
-  console.log(req.body)
-  console.log(req.user)
-  axios.get()
- const user = await User.findOne({
-  where: {
-    tokenId: req.body.token
-  }
-});
+
+
+ 
 
 
   const photo = await Photo.build({
