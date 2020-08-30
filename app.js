@@ -9,10 +9,10 @@ const routes = require('./routes');
 const app = express();
 
 app.use(cors({ origin: true }));
-app.use(helmet({ hsts: false }));
+app.use(helmet({ hsts: false, contentSecurityPolicy: false, }));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false, contentSecurityPolicy: false, }));
+app.use(express.urlencoded({ extended: false }));
 app.use(routes);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
