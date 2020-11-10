@@ -14,8 +14,49 @@ export const fetchPhotostream = () => async dispatch => {
   dispatch(getPhotostream(data))
 }
 
-export const getPhotostream = (data) => ({
+export const fetchAlbum = () => async dispatch => {
+  const response = await fetch(`${baseUrl}/feed`)
+  if (!response.ok) {
+    throw response;
+  }
+
+  const data = await response.json()
+  dispatch(getAlbum(data))
+}
+export const fetchGallery = () => async dispatch => {
+  const response = await fetch(`${baseUrl}/feed`)
+  if (!response.ok) {
+    throw response;
+  }
+
+  const data = await response.json()
+  dispatch(getPhotostream(data))
+}
+export const fetchFollows= () => async dispatch => {
+  const response = await fetch(`${baseUrl}/feed`)
+  if (!response.ok) {
+    throw response;
+  }
+
+  const data = await response.json()
+  dispatch(getPhotostream(data))
+}
+
+
+export const getAlbum = (data) => ({
+  type: GET_ALBUM,
+  data
+})
+
+export const getGallery = (data) => ({
+  type: GET_GALLERY,
+  data
+})export const getPhotostream = (data) => ({
   type: GET_PHOTOSTREAM,
+  data
+})
+export const getFollows = (data) => ({
+  type: GET_FOLLOWS,
   data
 })
 
