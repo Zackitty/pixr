@@ -1,8 +1,11 @@
 import {baseUrl } from "../config"
+import { useParams } from 'react-router-dom'
 const GET_PHOTOSTREAM = 'Pixr/feed/GET_PHOTOSTREAM';
 const GET_ALBUM = 'Pixr/feed/GET_PHOTOSTREAM';
 const GET_FOLLOWS = 'Pixr/feed/GET_PHOTOSTREAM';
 const GET_GALLERY = 'Pixr/feed/GET_PHOTOSTREAM';
+const {userId} = useParams()
+
 
 export const fetchPhotostream = () => async dispatch => {
   const response = await fetch(`${baseUrl}/feed`)
@@ -15,7 +18,7 @@ export const fetchPhotostream = () => async dispatch => {
 }
 
 export const fetchAlbum = () => async dispatch => {
-  const response = await fetch(`${baseUrl}/feed`)
+  const response = await fetch(`${baseUrl}/${userId}/album`)
   if (!response.ok) {
     throw response;
   }
@@ -24,7 +27,7 @@ export const fetchAlbum = () => async dispatch => {
   dispatch(getAlbum(data))
 }
 export const fetchGallery = () => async dispatch => {
-  const response = await fetch(`${baseUrl}/feed`)
+  const response = await fetch(`${baseUrl}/${userId}/gallery`)
   if (!response.ok) {
     throw response;
   }
@@ -33,7 +36,7 @@ export const fetchGallery = () => async dispatch => {
   dispatch(getPhotostream(data))
 }
 export const fetchFollows= () => async dispatch => {
-  const response = await fetch(`${baseUrl}/feed`)
+  const response = await fetch(`${baseUrl}/${userId}/follows`)
   if (!response.ok) {
     throw response;
   }
@@ -51,7 +54,8 @@ export const getAlbum = (data) => ({
 export const getGallery = (data) => ({
   type: GET_GALLERY,
   data
-})export const getPhotostream = (data) => ({
+})
+export const getPhotostream = (data) => ({
   type: GET_PHOTOSTREAM,
   data
 })
