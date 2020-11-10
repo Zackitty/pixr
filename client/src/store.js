@@ -5,7 +5,7 @@ import rootReducer from './reducers/root';
 
 const configureStore = () => {
   return createStore(
-    rootReducer,
+    rootReducer, 
     applyMiddleware(thunk),
   );
 };

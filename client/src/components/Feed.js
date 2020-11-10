@@ -10,7 +10,7 @@ const Feed = ({ token }) => {
       fetch(`${baseUrl}/feed`)
           .then(res => res.json())
           .then(data => setState(data.photos))
-      
+            
   }, [])
   
 return (
