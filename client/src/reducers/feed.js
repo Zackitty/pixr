@@ -65,22 +65,50 @@ export const getFollows = (data) => ({
 })
 
 
-export default function reducer(state = {}, action) {
+export default function reducer(state = { 
+  photoStream: true,
+  album: false,
+  gallery: false,
+  follows: false
+}, action) {
   Object.freeze(state)
-  const newState = Object.assign({}, state);
   switch (action.type) {
     case GET_PHOTOSTREAM: {
-      return action.data
+      return { 
+        feed: action.data, 
+        photoStream: true,
+        album: false,
+        gallery: false,
+        follows: false }
     }
     case GET_ALBUM: {
-      return action.data
+      return{
+       feed: action.data, 
+       photoStream: false,
+       album: true,
+       gallery: false,
+       follows: false 
+
+      }
     }
     case GET_GALLERY: {
-      return action.data
+      return {
+        feed: action.data, 
+        photoStream: false,
+        album: false,
+        gallery: true,
+        follows: false 
+      }
     } 
     case GET_FOLLOWS: {
-      return action.data
+      return {
+        feed: action.data, 
+        photoStream: false,
+        album: false,
+        gallery: false,
+        follows: true 
+      }
     }
-    default: return newState
+    default: return state
   }
 }
