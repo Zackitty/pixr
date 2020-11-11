@@ -2,7 +2,7 @@ import React from 'react'
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 
-const  Gallery = (props) => {
+const AlbumStream = (props) => {
   return (
     <div>
       
@@ -10,7 +10,4 @@ const  Gallery = (props) => {
   )
 }
 
-
-
-export default Gallery
-
+export default AlbumStream
