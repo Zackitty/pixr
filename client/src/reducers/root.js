@@ -4,9 +4,10 @@ import pixr from './pixr'
 import feed from './feed'
 
 const rootReducer = combineReducers({
+  feed,
   authentication,
-  pixr, 
-  feed
+  pixr,
+
 });
 
 export default rootReducer;
