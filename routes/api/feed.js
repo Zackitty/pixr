@@ -17,4 +17,37 @@ router.get('/', asyncHandler(async (req, res) => {
 }))
 
 
+router.get(`/:id/follows`, asyncHandler(async (req, res) => {
+  
+  const photos = await Photo.findAll({
+    order: [['createdAt', 'DESC']]
+  });
+
+  res.json({ photos });
+}))
+
+router.get('/:id/album', asyncHandler(async (req, res) => {
+  
+  const photos = await Photo.findAll({
+    order: [['createdAt', 'DESC']]
+  });
+
+  res.json({ photos });
+}))
+
+router.get('/:id/gallery', asyncHandler(async (req, res) => {
+  
+  const photos = await Photo.findAll({
+    order: [['createdAt', 'DESC']],
+    where: {
+      id: {
+        
+      }
+    }
+  });
+
+  res.json({ photos });
+}))
+
+
 module.exports = router

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Album.associate = function(models) {
     Album.belongsTo(models.User,{foreignKey:'userId'})
-    Album.belongsTo(models.Photo,{foreignKey:'photoId'})
+    Album.hasMany(models.Photo,{foreignKey:'photoId'})
     Album.hasMany(models.Fave, { foreignKey: 'albumId', onDelete: 'CASCADE', hooks: true})
     Album.hasMany(models.Comment, { foreignKey: 'albumId', onDelete: 'CASCADE', hooks: true})
     Album.hasMany(models.Tag, { foreignKey: 'albumId', onDelete: 'CASCADE', hooks: true})

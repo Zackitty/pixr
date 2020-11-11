@@ -14,11 +14,11 @@ module.exports = {
       },
       galleryId: {
         type: Sequelize.INTEGER,
-        eferences: {model: 'Galleries'}
+        references: {model: 'Galleries'}
       },
       photoId: {
         type: Sequelize.INTEGER,
-        eferences: {model: 'Photos'}
+        references: {model: 'Photos'}
       },
       tagWord: {type: Sequelize.STRING(100)}
     });

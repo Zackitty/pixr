@@ -6,7 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     photoPath: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    albumId: DataTypes.INTEGER,
+    followsId: DataTypes.INTEGER,
+    galleryId: DataTypes.INTEGER
   }, {});
   Photo.associate = function(models) {
     Photo.belongsTo(models.User,{foreignKey:'userId'})
@@ -15,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     Photo.hasMany(models.Tag, { foreignKey: 'photoId', onDelete: 'CASCADE', hooks: true})
     Photo.hasMany(models.Album, { foreignKey: 'photoId', onDelete: 'CASCADE', hooks: true})
     Photo.hasMany(models.Fave, { foreignKey: 'photoId', onDelete: 'CASCADE', hooks: true})
+    Photo.hasMany(models.Follow, {foreignKey: 'photoId', onDelete: 'CASCADE', hooks: true})
   };
   return Photo;
 };
