@@ -18,7 +18,7 @@ const password =
     .not().isEmpty()
     .withMessage('Please provide a password');
 
-router.put('/', [email, password], asyncHandler(async (req, res, next) => {
+router.post('/', [email, password], asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next({ status: 422, errors: errors.array() });

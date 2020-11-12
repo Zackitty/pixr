@@ -22,7 +22,7 @@ export const loadToken = () => async dispatch => {
 
 export const login = (email, password) => async dispatch => {
   const response = await fetch(`${baseUrl}/session`, {
-    method: 'put',
+    method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
