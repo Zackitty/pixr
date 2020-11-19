@@ -58,7 +58,7 @@ class Album(db.Model):
   description = db.Column(db.String(255), nullable= True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
-  photo = db.relationship('Photos',  back_populates="albums")
+  photo = db.relationship('Photos', secondary=albumPhotos, backref=db.backref('photoAlbums', lazy='dynamic'))
   user = db.relationship("User",  back_populates="albums")
   def to_dict(self):
 
@@ -69,3 +69,8 @@ class Album(db.Model):
       "description": self.description,
       "user": self.user_id,
     }
+
+    albumPhotos = db.Table('albumPhotos',
+      db.Column('id', db.Integer, db.ForeignKey('photos.id')),
+      db.Column('id', db.Integer, db.ForeignKey('albums.id'))
+      )
