@@ -5,3 +5,7 @@ import bcrypt
 import re
 
 bp = Blueprint('uploads', __name__, '')
+
+#todo 
+#make routes for getting albums
+#make routes for putting post requests to albums
