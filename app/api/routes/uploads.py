@@ -12,4 +12,5 @@ bp = Blueprint('uploads', __name__, '')
 
 @bp.route('')
 def index():
-  
+  response = 
+  return {user.id: user.to_dict() for user in response}

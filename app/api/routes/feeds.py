@@ -5,3 +5,8 @@ import bcrypt
 import re
 
 bp = Blueprint('feeds', __name__, '')
+
+@bp.route('')
+def index():
+  response = Photo.query.all()
+  return {photo.id: photo.to_dict() for user in response}
