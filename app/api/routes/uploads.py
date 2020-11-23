@@ -10,7 +10,7 @@ bp = Blueprint('uploads', __name__, '')
 #make routes for getting albums
 #make routes for putting post requests to albums
 
-@bp.route('')
-def index():
-  response = 
-  return {user.id: user.to_dict() for user in response}
+# @bp.route('')
+# def index():
+#   response = 
+#   return {user.id: user.to_dict() for user in response}

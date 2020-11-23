@@ -3,6 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 #
 
+
+albumPhotos = db.Table('albumPhotos',
+  db.Column('id', db.Integer, db.ForeignKey('photos.id')),
+  db.Column('id', db.Integer, db.ForeignKey('albums.id'))
+)
+
 class User(db.Model):
   __tablename__ = 'users'
 
@@ -70,7 +76,3 @@ class Album(db.Model):
       "user": self.user_id,
     }
 
-    albumPhotos = db.Table('albumPhotos',
-      db.Column('id', db.Integer, db.ForeignKey('photos.id')),
-      db.Column('id', db.Integer, db.ForeignKey('albums.id'))
-      )
