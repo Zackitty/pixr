@@ -18,8 +18,8 @@ class User(db.Model):
   email = db.Column(db.String(255), nullable = False, unique = True)
   avatar = db.Column(db.String(255), nullable = True)
   album_id = db.Column(db.Integer, nullable = True)
-  photos = db.relationship('Photo', back_populates="users")
-  albums = db.relationship('Album', back_populates="users")
+  photos = db.relationship('Photo', back_populates="user")
+  albums = db.relationship('Album', back_populates="user")
 
   def to_dict(self):
     # created_post_ids = [
@@ -41,6 +41,7 @@ class Photo(db.Model):
   name = db.Column(db.String(255), nullable= True)
   description = db.Column(db.String(255), nullable= True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  album_id = db.Column(db.Integer, db.ForeignKey("albums.id"))
 
   albums = db.relationship('Album', back_populates='photos')
   user = db.relationship("User",  back_populates="photos")
@@ -63,8 +64,9 @@ class Album(db.Model):
   name = db.Column(db.String(255), nullable= True)
   description = db.Column(db.String(255), nullable= True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  photo_id = db.Column(db.Integer, db.ForeignKey("photos.id"))
 
-  photo = db.relationship('Photos', secondary=albumPhotos, backref=db.backref('photoAlbums', lazy='dynamic'))
+  photo = db.relationship('Photo', secondary=albumPhotos, backref=db.backref('photoAlbums', lazy='dynamic'))
   user = db.relationship("User",  back_populates="albums")
   def to_dict(self):
 
