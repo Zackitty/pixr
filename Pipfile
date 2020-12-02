@@ -9,14 +9,14 @@ verify_ssl = true
 flask = "*"
 flask-cors = "*"
 flask-wtf = "*"
-flask-migrate = "*"
 flask-jwt-extended = "*"
 bcrypt = "*"
 flask-sqlalchemy = "*"
-alembic = "*"
 psycopg2 = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
+alembic = "*"
+flask-migrate = "*"
 
 [requires]
 python_version = "3.8"
