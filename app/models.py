@@ -78,3 +78,4 @@ class Album(db.Model):
       "user": self.user_id,
     }
 
+console.log('')
