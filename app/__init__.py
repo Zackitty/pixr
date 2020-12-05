@@ -9,7 +9,6 @@ from app.models import db, User, Photo, Album
 from app.api.api import user_routes, feed_routes, upload_routes
 from app.config import Config
 
-console.log('')
 
 
 app = Flask(__name__, static_url_path='')
