@@ -17,7 +17,6 @@ class User(db.Model):
   encrypted_password = db.Column(db.LargeBinary, nullable=False)
   email = db.Column(db.String(255), nullable = False, unique = True)
   avatar = db.Column(db.String(255), nullable = True)
-  album_id = db.Column(db.Integer, nullable = True)
   photos = db.relationship('Photo', back_populates="user")
   albums = db.relationship('Album', back_populates="user")
 
