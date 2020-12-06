@@ -38,4 +38,13 @@ with app.app_context():
 
   photo4 = Photo(content = 'https://64.media.tumblr.com/92041d8e302c03eadc903d964da5f3c6/fee9ff38989d5868-42/s500x750/7c06220e25732be3554ce490642d8af15aaa6e7d.jpg',
             name="Moguta", description="Moguta doesn't like you", user_id=1, album_id=1)
-  
+  db.session.add(demo_user)
+  db.session.add(mister_3)
+  db.session.add(miss_monday) 
+  db.session.add(Zackitty)
+  db.session.add(miss_goldenweek)
+  db.session.add(photo1)
+  db.session.add(photo2)
+  db.session.add(photo3)
+  db.session.add(photo4)
+  db.session.commit()
