@@ -62,9 +62,6 @@ class Album(db.Model):
   name = db.Column(db.String(255), nullable= True)
   description = db.Column(db.String(255), nullable= True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-  photo_id = db.Column(db.Integer, db.ForeignKey("photos.id"))
-
-  
   user = db.relationship("User",  back_populates="albums")
   def to_dict(self):
 
