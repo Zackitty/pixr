@@ -5,7 +5,7 @@ import bcrypt
 import re
 
 bp = Blueprint('feeds', __name__, '')
-console 
+
 @bp.route('')
 def index():
   response = Photo.query.all()
