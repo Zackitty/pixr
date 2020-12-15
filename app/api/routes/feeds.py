@@ -10,3 +10,8 @@ bp = Blueprint('feeds', __name__, '')
 def index():
   response = Photo.query.all()
   return {photo.id: photo.to_dict() for photo in response}
+
+@bp.route('<int:id>/albums/<int:id>')
+
+@bp.route('<int:id>/albums/<int:id>')
+def index():
