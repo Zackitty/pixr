@@ -18,5 +18,5 @@ def user_photos(id):
 
 @bp.route('/albums/<int:id>')
 def albums_photos(id):
-    response = albumPhotos.query.filter(albumPhotos.Album.id == id)
+    response = Album.query.filter(Album.photos.any())
     return {photo.id: photo.to_dict() for photo in response}

@@ -5,8 +5,8 @@ db = SQLAlchemy()
 
 
 albumPhotos = db.Table('albumPhotos',
-  db.Column('id', db.Integer, db.ForeignKey('photos.id')),
-  db.Column('id', db.Integer, db.ForeignKey('albums.id'))
+  db.Column('photo_id', db.Integer, db.ForeignKey('photos.id')),
+  db.Column('album_id', db.Integer, db.ForeignKey('albums.id'))
 )
 
 class User(db.Model):
@@ -63,6 +63,7 @@ class Album(db.Model):
   description = db.Column(db.String(255), nullable= True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   user = db.relationship("User",  back_populates="albums")
+  photos = db.relationship('Photo', secondary=albumPhotos, backref=db.backref('photos'))
   def to_dict(self):
 
     return {
